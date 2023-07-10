@@ -52,10 +52,10 @@ namespace prjMVCCoreDemo.Models
             set { _product.FImagePath = value; }
         }
 
-        public IFormFile photo { get;set; }
+        public IFormFile photo { get; set; }
 
     }
-    public static class CProductWrapExt
+    public static class CProductWrapExts
     {
         public static CProductWrap toWrap(this TProduct product)
         {
@@ -65,7 +65,7 @@ namespace prjMVCCoreDemo.Models
             productWrap.FQty = product.FQty;
             productWrap.FCost = product.FCost;
             productWrap.FPrice = product.FPrice;
-            productWrap.FImagePath= product.FImagePath;
+            productWrap.FImagePath = product.FImagePath;
 
             return productWrap;
         }

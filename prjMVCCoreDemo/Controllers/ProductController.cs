@@ -62,7 +62,9 @@ namespace prjMVCCoreDemo.Controllers
             var db = new DbDemoContext();
             var query = db.TProducts.FirstOrDefault(p => p.FId == id);
 
-            return View(query);
+            var productWrap = query.toWrap();
+
+            return View(productWrap);
         }
 
         [HttpPost]
