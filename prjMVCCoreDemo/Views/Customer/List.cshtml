@@ -1,0 +1,80 @@
+﻿@model IEnumerable<prjMVCCoreDemo.Models.TCustomer>
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>客戶資料一覽</h1>
+
+@using (Html.BeginForm())
+{
+    @:<span>關鍵字</span>
+    @Html.TextBox("Keyword");
+    <input type="submit" value="搜尋" class="btn btn-outline-dark">
+}
+
+<p>
+    <a asp-action="Create">新增客戶</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                序號
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FPassword)
+            </th>
+            <th>修改</th>
+            <th>刪除</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+            foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <td>
+                        @count
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FPhone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FPassword)
+                    </td>
+                    <td>
+                        @Html.ActionLink("修改", "Edit", new { id=item.FId }) 
+                    </td>
+                    <td>
+                        @Html.ActionLink("刪除", "Delete","Customer", new { id=item.FId },
+                new{onclick="return confirm('確定要刪除嗎?')"})
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
