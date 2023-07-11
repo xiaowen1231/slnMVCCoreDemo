@@ -6,6 +6,11 @@ namespace prjMVCCoreDemo.Controllers
 {
     public class ProductController : Controller
     {
+        private IWebHostEnvironment _environment = null;
+        public ProductController(IWebHostEnvironment environment)
+        {
+            _environment = environment;
+        }
         public IActionResult List(CKeywordViewModel vm)
         {
             IEnumerable<TProduct> products = null;
@@ -13,17 +18,24 @@ namespace prjMVCCoreDemo.Controllers
             if (string.IsNullOrEmpty(vm.Keyword))
             {
                 products = (from c in db.TProducts
-                           select c);
+                            select c);
             }
             else
             {
                 products = db.TProducts.Where(c => c.FName.Contains(vm.Keyword));
-                
+
             }
 
-            var productWrap = products.Select(p => p.toWrap());
-            
-            return View(productWrap);
+            //var productWrap = products.Select(p => p.toWrap());
+
+            List<CProductWrap> list = new List<CProductWrap>();
+            foreach(var item in products)
+            {
+                CProductWrap itemPW = new CProductWrap();
+                itemPW.product = item;
+                list.Add(itemPW);
+            }
+            return View(list);
         }
 
         public IActionResult Create()
@@ -80,9 +92,11 @@ namespace prjMVCCoreDemo.Controllers
                 productInDb.FPrice = productInForm.FPrice;
                 if (productInForm.photo != null)
                 {
-                    string photoName = Guid.NewGuid().ToString();
+                    string photoName = Guid.NewGuid().ToString() + ".jpg";
                     productInDb.FImagePath = photoName;
-                    //productInForm.photo.CopyTo();
+                    productInForm.photo.CopyTo(
+                        new FileStream(_environment.WebRootPath + "/Images/" + photoName
+                        , FileMode.Create));
                 }
 
                 db.SaveChanges();

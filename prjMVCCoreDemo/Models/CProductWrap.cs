@@ -9,6 +9,11 @@ namespace prjMVCCoreDemo.Models
         {
             _product = new TProduct();
         }
+        public TProduct product
+        {
+            get { return _product; }
+            set { _product = value; }
+        }
         public int FId
         {
             get { return _product.FId; }

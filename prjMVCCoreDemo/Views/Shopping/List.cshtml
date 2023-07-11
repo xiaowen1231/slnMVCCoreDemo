@@ -1,20 +1,13 @@
-﻿@model IEnumerable<prjMVCCoreDemo.Models.CProductWrap>
+﻿@model IEnumerable<prjMVCCoreDemo.Models.TProduct>
 
 @{
     ViewData["Title"] = "List";
 }
 
-<h1>課程一覽</h1>
-<div>
-    @using (Html.BeginForm())
-    {
-        <span>關鍵字</span>
-        @Html.TextBox("Keyword")
-        <input type="submit" value="搜尋" class="btn btn-outline-dark">
-    }
-</div>
+<h1>線上選課</h1>
+
 <p>
-    <a asp-action="Create">新增課程</a>
+    <a asp-action="ViewCart">檢視選課單</a>
 </p>
 <table class="table">
     <thead>
@@ -29,16 +22,12 @@
                 @Html.DisplayNameFor(model => model.FQty)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FCost)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.FPrice)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FImagePath)
             </th>
-            <th>修改</th>
-            <th>刪除</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -58,20 +47,13 @@
                         @Html.DisplayFor(modelItem => item.FQty)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.FCost)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.FPrice)
                     </td>
                     <td>
-                        <img src="~/images/@item.FImagePath" width="100">
+                        <img src="~/images/@item.FImagePath" width="100"/>
                     </td>
                     <td>
-                        @Html.ActionLink("修改", "Edit", new { id=item.FId })
-                    </td>
-                    <td>
-                        @Html.ActionLink("刪除", "Delete","Product", new { id=item.FId },
-                new{onclick="return confirm('確定要刪除嗎?')"})
+                        @Html.ActionLink("加入", "AddToCart", new {  id=item.FId  }) 
                     </td>
                 </tr>
             }
