@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using prjMVCCoreDemo.Models;
 using prjMVCCoreDemo.ViewModels;
+using System.Text.Json;
 
 namespace prjMVCCoreDemo.Controllers
 {
@@ -31,9 +32,42 @@ namespace prjMVCCoreDemo.Controllers
             var product = db.TProducts.FirstOrDefault(p => p.FId == vm.fId);
             if(product!=null)
             {
-
+                string json = "";
+                List<CShoppingCartItem> cart = null;
+                if(HttpContext.Session.Keys.Contains(CDictionary.SessionKey_ShoppingCart))
+                {
+                    json = HttpContext.Session.GetString(CDictionary.SessionKey_ShoppingCart);
+                    cart = JsonSerializer.Deserialize<List<CShoppingCartItem>>(json);
+                }
+                else
+                {
+                    cart = new List<CShoppingCartItem>();
+                }
+                CShoppingCartItem item = new CShoppingCartItem();
+                item.price = (decimal)product.FPrice;
+                item.productId = vm.fId;
+                item.count = vm.fCount;
+                item.product = product;
+                cart.Add(item);
+                json = JsonSerializer.Serialize(cart);
+                HttpContext.Session.SetString(CDictionary.SessionKey_ShoppingCart, json);
             }
             return RedirectToAction("List");
+        }
+
+        public IActionResult ViewCart()
+        {
+            if (!HttpContext.Session.Keys.Contains(CDictionary.SessionKey_ShoppingCart))
+            {
+                return RedirectToAction("List");
+            }
+            string json = HttpContext.Session.GetString(CDictionary.SessionKey_ShoppingCart) ;
+            List<CShoppingCartItem> cart = JsonSerializer.Deserialize<List<CShoppingCartItem>>(json);
+            if(cart==null)
+            {
+                return RedirectToAction("List");
+            }
+            return View(cart);
         }
     }
 }

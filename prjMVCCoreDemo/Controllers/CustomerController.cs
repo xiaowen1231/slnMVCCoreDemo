@@ -4,7 +4,7 @@ using prjMVCCoreDemo.ViewModels;
 
 namespace prjMVCCoreDemo.Controllers
 {
-    public class CustomerController : Controller
+    public class CustomerController : CSuperController
     {
         public IActionResult List(CKeywordViewModel vm)
         {

@@ -4,7 +4,7 @@ using prjMVCCoreDemo.ViewModels;
 
 namespace prjMVCCoreDemo.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController : CSuperController
     {
         private IWebHostEnvironment _environment = null;
         public ProductController(IWebHostEnvironment environment)

@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<h1 class="border-bottom">登入系統</h1>
+
+<h2>輸入帳號密碼</h2>
+<form method="post">
+    <span>帳號(註冊時使用的Email)</span>
+    <input type="text" name="Account" value="marco@gmail.com" class="form-control" />
+    <span>密碼</span>
+    <input type="text" name="Password" class="form-control" />
+    <input type="submit" value="登入" class="btn btn-dark" />
+</form>
+<div>
+    @Html.ActionLink("忘記密碼", "List", "Product", null, new { @class = "btn btn-outline-dark" })
+</div>

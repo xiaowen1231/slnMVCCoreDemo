@@ -1,0 +1,73 @@
+﻿@model IEnumerable<prjMVCCoreDemo.Models.CShoppingCartItem>
+
+@{
+    ViewData["Title"] = "ViewCart";
+}
+
+<h2>選課願望清單</h2>
+
+<p>
+    @Html.ActionLink("結帳", "checkout")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            序號
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.product.FName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.count)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.小計)
+        </th>
+        <th>修改</th>
+        <th>刪除</th>
+    </tr>
+    @{
+        int count = 0;
+        decimal sum = 0;
+        decimal tax = 0;
+        decimal pay = 0;
+        foreach (var item in Model)
+        {
+            count++;
+            sum += item.小計;
+            <tr>
+                <td>
+                    @count
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.product.FName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.count)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.小計)
+                </td>
+                <td>
+                    @Html.ActionLink("修改", "Edit", new { /* id=item.PrimaryKey */ })
+                </td>
+                <td>
+                    @Html.ActionLink("刪除", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+        tax = sum * 0.05m;
+        pay = sum + tax;
+    }
+</table>
+<div>
+    <li>總計金額:@sum.ToString("###,###,###.0")</li>
+    <li>稅    額:@tax.ToString("###,###,###.0")</li>
+    <li>應付總額:@pay.ToString("###,###,###.0")</li>
+</div>
