@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "showCountBySession";
+}
+
+<h1>showCountBySession</h1>
+
+@using (Html.BeginForm())
+{
+    <h2>@ViewBag.count</h2>
+    <input type="submit" value="累加" />
+}
